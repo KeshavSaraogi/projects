@@ -35,7 +35,7 @@ public class MovieListActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getRetrofitResponse();
+                getRetrofitResponseByID();
             }
         });
     }
@@ -43,7 +43,7 @@ public class MovieListActivity extends AppCompatActivity {
     private void getRetrofitResponse() {
         MovieAPI movieAPI = Service.getMovieAPI();
         Call<MovieSearchResponse> movieSearchResponseCall = movieAPI.searchMovie(
-                Credentials.API_KEY, "Jack Reacher", "1");
+                Credentials.API_KEY, "Jack Reacher", 1);
 
         movieSearchResponseCall.enqueue(new Callback<MovieSearchResponse>() {
             @Override
@@ -63,6 +63,29 @@ public class MovieListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getRetrofitResponseByID() {
+        MovieAPI movieAPI = Service.getMovieAPI();
+        Call<MovieModel> responseCall = movieAPI.
+                getMovie(343611, Credentials.API_KEY);
+        responseCall.enqueue(new Callback<MovieModel>() {
+            @Override
+            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+                if (response.code() == 200) {
+                    MovieModel movie = response.body();
+                    Log.v("TAG", "The Response Is " + movie.getTitle());
+                }
+                else {
+                    Log.v("TAG", "Error " + response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieModel> call, Throwable t) {
 
             }
         });
