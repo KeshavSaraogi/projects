@@ -51,103 +51,6 @@ const Resume = (props) => {
     { label: "Interests", logoSrc: "interests.svg" },
   ]
 
-  //here we have
-  const programmingSkillsDetails = [
-    { skill: "JavaScript", ratingPercentage: 85 },
-    { skill: "React JS", ratingPercentage: 85 },
-    { skill: "React Native", ratingPercentage: 85 },
-    { skill: "Express JS", ratingPercentage: 89 },
-    { skill: "Node JS", ratingPercentage: 89 },
-    { skill: "Mongo Db", ratingPercentage: 70 },
-    { skill: "Core Java", ratingPercentage: 80 },
-    { skill: "HTML", ratingPercentage: 80 },
-    { skill: "CSS", ratingPercentage: 80 },
-  ]
-
-  const projectsDetails = [
-    {
-      title: "Personal Portfolio Website",
-      duration: { fromDate: "2020", toDate: "2021" },
-      description:
-        "A Personal Portfolio website to showcase all my details and projects at one place.",
-      subHeading: "Technologies Used: React JS, Bootsrap",
-    },
-    {
-      title: "Mobile E-shop ",
-      duration: { fromDate: "2020", toDate: "2021" },
-      description:
-        "An ecommerce application designed to sell products online wth payment system integration",
-      subHeading:
-        "Technologies Used:  React Native, Mongo DB, Express Js, Node Js, Redux.",
-    },
-    {
-      title: "Ecommerce Website ",
-      duration: { fromDate: "2020", toDate: "2021" },
-      description:
-        "Online ecommerce website for showcasing and selling products onlne with payment system integration, both Paypal and Stripe",
-      subHeading:
-        "Technologies Used: Mongo DB, Epress Js, React Js, Node JS, Redux, Bootstrap.",
-    },
-  ]
-
-  const resumeDetails = [
-    <div className="resume-screen-container" key="education">
-      <ResumeHeading
-        heading={"University of Legon Accra, Ghana"}
-        subHeading={"BACHELOR OF SCIENCE INFORMATION TECHNOLOGY"}
-        fromDate={"2014"}
-        toDate={"2018"}
-      />
-
-      <ResumeHeading
-        heading={"National Youth Service Corps"}
-        subHeading={"Ministry Of Science And Technogy. Uyo Akwa Ibom State"}
-        fromDate={"2019"}
-        toDate={"2020"}
-      />
-      <ResumeHeading
-        heading={"High School "}
-        subHeading={"Command Secondary School Mbiri"}
-        fromDate={"2007"}
-        toDate={"2012"}
-      />
-    </div>,
-
-    /* WORK EXPERIENCE */
-    <div className="resume-screen-container" key="work-experience">
-      <div className="experience-container">
-        <ResumeHeading
-          heading={"Ehizeex Technoloy"}
-          subHeading={"FULL STACK DEVELOPER INTERN"}
-          fromDate={"2021"}
-          toDate={"Present"}
-        />
-        <div className="experience-description">
-          <span className="resume-description-text">
-            Currently working as MERN stack web and mobile developer and also an
-            online instructor on udemy.
-          </span>
-        </div>
-        <div className="experience-description">
-          <span className="resume-description-text">
-            - Developed an ecommerce website for client with the dashboard for
-            managing the products, managing reviews, users, payment etc. .
-          </span>
-          <br />
-          <span className="resume-description-text">
-            - Integrated the web app with backend services to create new user
-            onboarding application with dynamic form content.{" "}
-          </span>
-          <br />
-          <span className="resume-description-text">
-            - I stretch my mental capacity to develope UI as per the given
-            designs.
-          </span>
-          <br />
-        </div>
-      </div>
-    </div>,
-
     /* PROGRAMMING SKILLS */
     <div
       className="resume-screen-container programming-skills-container"
@@ -165,7 +68,7 @@ const Resume = (props) => {
           </div>
         </div>
       ))}
-    </div>,
+    </div>
 
     /* PROJECTS */
     <div className="resume-screen-container" key="projects">
@@ -195,8 +98,8 @@ const Resume = (props) => {
         heading="Competitive Gaming"
         description="I like to challenge my reflexes a lot while competing in football games, pushing the rank and having interactive gaming sessions excites me the most."
       />
-    </div>,
-  ]
+    </div>
+  
 
   const handleCarousal = (index) => {
     let offsetHeight = 360
