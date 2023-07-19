@@ -31,5 +31,9 @@ public class MovieRepository {
     public LiveData<List<MovieModel>> getMovies() {
         return movieAPIClient.getMovies();
     }
+
+    public void searchMovieAPI(String query, int pageNumber) {
+        movieAPIClient.searchMoviesAPI(query, pageNumber);
+    }
 }
 
