@@ -42,6 +42,8 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
     private MovieListViewModel movieListViewModel;
 
+    boolean isPopular = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +56,31 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         recyclerView = findViewById(R.id.recyclerView);
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
-        observeAnyChange();
         configureRecyclerView();
+        observeAnyChange();
+        observePopularMovies();
+
+        movieListViewModel.searchPopularMovieAPI(1);
+    }
+
+    private void observePopularMovies() {
+        movieListViewModel.getPopularMovie().observe(this, new Observer<List<MovieModel>>() {
+            @Override
+            public void onChanged(List<MovieModel> movieModels) {
+                if (movieModels != null) {
+                    for (MovieModel movieModel: movieModels) {
+                        Log.v("TAG","On Changed: " + movieModel.getTitle());
+                        movieRecyclerViewAdapter.setListMovies(movieModels);
+                    }
+                }
+            }
+        });
     }
 
     private void configureRecyclerView() {
         movieRecyclerViewAdapter = new MovieRecyclerView(this);
         recyclerView.setAdapter(movieRecyclerViewAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -98,6 +117,13 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPopular = false;
             }
         });
     }

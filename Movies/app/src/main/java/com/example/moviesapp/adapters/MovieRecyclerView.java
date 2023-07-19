@@ -17,6 +17,8 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private List<MovieModel> listMovies;
     private OnMovieListener onMovieListener;
+    private static final int DISPLAY_UP = 1;
+    private static final int DISPLAY_SEARCH = 2;
 
     public MovieRecyclerView(OnMovieListener onMovieListener) {
         this.onMovieListener = onMovieListener;
@@ -25,21 +27,36 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_item, parent, false);
-        return new MovieViewHolder(view, onMovieListener);
+
+        View view = null;
+        if (viewType == DISPLAY_SEARCH) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_item, parent, false);
+            return new MovieViewHolder(view, onMovieListener);
+        }
+        else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_list_item, parent, false);
+            return new PopularMovieViewHolder(view, onMovieListener);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        ((MovieViewHolder)holder).title.setText(listMovies.get(position).getTitle());
-        ((MovieViewHolder)holder).releaseDate.setText(listMovies.get(position).getReleaseDate());
-        ((MovieViewHolder)holder).duration.setText(listMovies.get(position).getOriginalLanguage());
-        ((MovieViewHolder)holder).ratingBar.setRating(listMovies.get(position).getVoteAverage() / 2);
+        int itemViewType = getItemViewType(position);
+        if (itemViewType == DISPLAY_SEARCH){
+            ((MovieViewHolder)holder).ratingBar.setRating(listMovies.get(position).getVoteAverage() / 2);
 
-        Glide.with(holder.itemView.getContext())
-                .load("https://image.tmdb.org/t/pw500/" + listMovies.get(position).getPosterPath())
-                .into(((MovieViewHolder)holder).imageView);
+            Glide.with(holder.itemView.getContext())
+                    .load("https://image.tmdb.org/t/pw500/" + listMovies.get(position).getPosterPath())
+                    .into(((MovieViewHolder)holder).imageView);
+        }
+        else {
+            ((PopularMovieViewHolder)holder).ratingBar.setRating(listMovies.get(position).getVoteAverage() / 2);
+
+            Glide.with(holder.itemView.getContext())
+                    .load("https://image.tmdb.org/t/pw500/" + listMovies.get(position).getPosterPath())
+                    .into(((MovieViewHolder)holder).imageView);
+        }
     }
 
     @Override
