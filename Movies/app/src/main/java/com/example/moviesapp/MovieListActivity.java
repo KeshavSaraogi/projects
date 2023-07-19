@@ -1,5 +1,6 @@
 package com.example.moviesapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -7,10 +8,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.moviesapp.adapters.MovieRecyclerView;
@@ -46,13 +49,13 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setupSearchView();
 
         recyclerView = findViewById(R.id.recyclerView);
 
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
         observeAnyChange();
         configureRecyclerView();
-        searchMovieAPI("Fast", 1);
     }
 
     private void configureRecyclerView() {
@@ -61,14 +64,42 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+            if (!recyclerView.canScrollHorizontally(1)){
+                movieListViewModel.searchNextPage();
+            }
+
+        }
+    });
+
     @Override
     public void onMovieClick(int position) {
-        Toast.makeText(this, "The Position " + position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MovieDetails.class);
+        intent.putExtra("movie", movieRecyclerViewAdapter.getSelectedMovie(position));
+        startActivity(intent);
     }
 
     @Override
     public void onCategoryClick(String category) {
 
+    }
+
+    private void setupSearchView() {
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                movieListViewModel.searchMovieAPI(query, 1);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void observeAnyChange() {
@@ -139,4 +170,5 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
             }
         });
     }
+
 }

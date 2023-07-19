@@ -12,6 +12,8 @@ public class MovieRepository {
 
     private static MovieRepository movieRepositoryInstance;
     private MovieAPIClient movieAPIClient;
+    private String movieQuery;
+    private int moviePageNumber;
 
     public static MovieRepository getInstance() {
         if (movieRepositoryInstance == null) {
@@ -33,7 +35,13 @@ public class MovieRepository {
     }
 
     public void searchMovieAPI(String query, int pageNumber) {
-        movieAPIClient.searchMoviesAPI(query, pageNumber);
+        movieQuery = query;
+        moviePageNumber = pageNumber;
+        searchMovieAPI(query, pageNumber);
+    }
+
+    public void searchNextPage() {
+        searchMovieAPI(movieQuery, moviePageNumber + 1);
     }
 }
 

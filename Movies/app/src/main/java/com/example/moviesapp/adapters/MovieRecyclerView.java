@@ -54,4 +54,13 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.listMovies = listMovies;
         notifyDataSetChanged();
     }
+
+    public MovieModel getSelectedMovie(int position) {
+        if (listMovies != null) {
+            if (listMovies.size() > 0) {
+                return listMovies.get(position);
+            }
+        }
+        return null;
+    }
 }
