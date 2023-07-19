@@ -1,6 +1,7 @@
 package com.example.moviesapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import retrofit2.Response;
 
 public class MovieListActivity extends AppCompatActivity implements OnMovieListener {
 
+    private Toolbar toolbar;
     private RecyclerView recyclerView;
     private MovieRecyclerView movieRecyclerViewAdapter;
 
@@ -41,6 +43,9 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -63,7 +68,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
     @Override
     public void onCategoryClick(String category) {
-        
+
     }
 
     private void observeAnyChange() {
