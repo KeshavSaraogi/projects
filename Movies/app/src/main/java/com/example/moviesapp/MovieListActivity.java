@@ -3,12 +3,17 @@ package com.example.moviesapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.moviesapp.adapters.MovieRecyclerView;
+import com.example.moviesapp.adapters.OnMovieListener;
 import com.example.moviesapp.model.MovieModel;
 import com.example.moviesapp.request.Service;
 import com.example.moviesapp.response.MovieResponse;
@@ -25,9 +30,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MovieListActivity extends AppCompatActivity {
+public class MovieListActivity extends AppCompatActivity implements OnMovieListener {
 
-    Button button;
+    private RecyclerView recyclerView;
+    private MovieRecyclerView movieRecyclerViewAdapter;
 
     private MovieListViewModel movieListViewModel;
 
@@ -36,15 +42,28 @@ public class MovieListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.recyclerView);
+
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
         observeAnyChange();
+        configureRecyclerView();
+        searchMovieAPI("Fast", 1);
+    }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchMovieAPI("Fast", 1);
-            }
-        });
+    private void configureRecyclerView() {
+        movieRecyclerViewAdapter = new MovieRecyclerView(this);
+        recyclerView.setAdapter(movieRecyclerViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public void onMovieClick(int position) {
+        Toast.makeText(this, "The Position " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCategoryClick(String category) {
+        
     }
 
     private void observeAnyChange() {
@@ -54,6 +73,7 @@ public class MovieListActivity extends AppCompatActivity {
                 if (movieModels != null) {
                     for (MovieModel movieModel: movieModels) {
                         Log.v("TAG","On Changed: " + movieModel.getTitle());
+                        movieRecyclerViewAdapter.setListMovies(movieModels);
                     }
                 }
             }
@@ -64,7 +84,7 @@ public class MovieListActivity extends AppCompatActivity {
         movieListViewModel.searchMovieAPI(query, pageNumber);
     }
 
-    private void getRetrofitResponse() {
+     private void getRetrofitResponse() {
         MovieAPI movieAPI = Service.getMovieAPI();
         Call<MovieSearchResponse> movieSearchResponseCall = movieAPI.searchMovie(
                 Credentials.API_KEY, "Jack Reacher", 1);

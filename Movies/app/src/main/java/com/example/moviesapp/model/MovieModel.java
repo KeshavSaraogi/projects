@@ -13,16 +13,25 @@ public class MovieModel implements Parcelable {
     private String releaseDate;
     private String movieOverview;
     private float voteAverage;
-    private int runtime;
+    private String originalLanguage;
 
-    public MovieModel(int movieID, String title, String posterPath, String releaseDate, String movieOverview, float voteAverage, int runtime) {
+    public MovieModel(int movieID, String title, String posterPath, String releaseDate, String movieOverview, float voteAverage, String originalLanguage) {
         this.movieID = movieID;
         this.title = title;
         this.posterPath = posterPath;
         this.releaseDate = releaseDate;
         this.movieOverview = movieOverview;
         this.voteAverage = voteAverage;
-        this.runtime = runtime;
+        this.originalLanguage = originalLanguage;
+    }
+
+    public MovieModel(int movieID, String title, String posterPath, String releaseDate, String movieOverview, float voteAverage) {
+        this.movieID = movieID;
+        this.title = title;
+        this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
+        this.movieOverview = movieOverview;
+        this.voteAverage = voteAverage;
     }
 
     protected MovieModel(Parcel in) {
@@ -32,7 +41,7 @@ public class MovieModel implements Parcelable {
         releaseDate = in.readString();
         movieOverview = in.readString();
         voteAverage = in.readFloat();
-        runtime = in.readInt();
+        originalLanguage = in.readString();
     }
 
     @Override
@@ -47,6 +56,7 @@ public class MovieModel implements Parcelable {
         dest.writeString(releaseDate);
         dest.writeString(movieOverview);
         dest.writeFloat(voteAverage);
+        dest.writeString(originalLanguage);
     }
 
     public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
@@ -109,7 +119,20 @@ public class MovieModel implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
-    public int getRuntime() {
-        return runtime;
+    public String getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieModel{" +
+                "movieID=" + movieID +
+                ", title='" + title + '\'' +
+                ", posterPath='" + posterPath + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", movieOverview='" + movieOverview + '\'' +
+                ", voteAverage=" + voteAverage +
+                ", originalLanguage='" + originalLanguage + '\'' +
+                '}';
     }
 }

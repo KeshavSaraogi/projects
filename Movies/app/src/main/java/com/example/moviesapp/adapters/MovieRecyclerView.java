@@ -18,6 +18,10 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<MovieModel> listMovies;
     private OnMovieListener onMovieListener;
 
+    public MovieRecyclerView(OnMovieListener onMovieListener) {
+        this.onMovieListener = onMovieListener;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,16 +34,24 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         ((MovieViewHolder)holder).title.setText(listMovies.get(position).getTitle());
         ((MovieViewHolder)holder).releaseDate.setText(listMovies.get(position).getReleaseDate());
-        ((MovieViewHolder)holder).duration.setText(listMovies.get(position).getRuntime());
+        ((MovieViewHolder)holder).duration.setText(listMovies.get(position).getOriginalLanguage());
         ((MovieViewHolder)holder).ratingBar.setRating(listMovies.get(position).getVoteAverage() / 2);
 
         Glide.with(holder.itemView.getContext())
-                .load(listMovies.get(position))
+                .load("https://image.tmdb.org/t/pw500/" + listMovies.get(position).getPosterPath())
                 .into(((MovieViewHolder)holder).imageView);
     }
 
     @Override
     public int getItemCount() {
+        if (listMovies != null) {
+            return listMovies.size();
+        }
         return 0;
+    }
+
+    public void setListMovies(List<MovieModel> listMovies) {
+        this.listMovies = listMovies;
+        notifyDataSetChanged();
     }
 }
