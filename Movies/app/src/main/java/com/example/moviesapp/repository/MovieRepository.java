@@ -53,4 +53,3 @@ public class MovieRepository {
         searchMovieAPI(movieQuery, moviePageNumber + 1);
     }
 }
-

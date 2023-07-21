@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.example.moviesapp'
-    compileSdk 33
+    compileSdk 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId "com.example.moviesapp"
         minSdk 30
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 

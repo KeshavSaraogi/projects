@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.moviesapp.model.MovieModel;
 import com.example.moviesapp.response.MovieSearchResponse;
-import com.example.moviesapp.utilities.BackgroundExecutors;
+import com.example.moviesapp.BackgroundExecutors;
 import com.example.moviesapp.utilities.Credentials;
 
 import java.io.IOException;
