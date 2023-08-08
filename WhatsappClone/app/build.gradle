@@ -7,13 +7,13 @@ plugins {
 }
 
 android {
-    namespace 'com.example.chatappclone'
-    compileSdk 33
+    namespace 'com.example.whatsappclone'
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.whatsappclone"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
