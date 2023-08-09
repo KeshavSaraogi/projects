@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             WhatsappCloneTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -56,11 +55,13 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ChatAppNavigation() {
     val navController = rememberNavController()
-    val viewmodel = hiltViewModel<AppViewModel>()
+    val viewModel = hiltViewModel<AppViewModel>()
+
+    NotificationMessage(viewModel = viewModel)
 
     NavHost(navController = navController, startDestination = DestinationScreen.Signup.route) {
         composable(DestinationScreen.Signup.route) {
-            SignupScreen(navController, viewmodel)
+            SignupScreen(navController, viewModel)
         }
         composable(DestinationScreen.Login.route) {
             LoginScreen()
@@ -72,7 +73,7 @@ fun ChatAppNavigation() {
             StatusListScreen(navController = navController)
         }
         composable(DestinationScreen.Signup.route) {
-            SignupScreen(navController, viewmodel)
+            SignupScreen(navController, viewModel)
         }
         composable(DestinationScreen.SingleStatus.route) {
             SingleStatusScreen(statusID = "123")
