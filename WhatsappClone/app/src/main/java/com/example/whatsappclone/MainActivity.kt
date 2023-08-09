@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.whatsappclone.ui.ChatListScreen
+import com.example.whatsappclone.ui.LoginScreen
 import com.example.whatsappclone.ui.ProfileScreen
 import com.example.whatsappclone.ui.SignupScreen
 import com.example.whatsappclone.ui.SingleChatScreen
@@ -64,7 +65,7 @@ fun ChatAppNavigation() {
             SignupScreen(navController, viewModel)
         }
         composable(DestinationScreen.Login.route) {
-            LoginScreen()
+            LoginScreen(navController, viewModel)
         }
         composable(DestinationScreen.Profile.route) {
             ProfileScreen(navController = navController)
