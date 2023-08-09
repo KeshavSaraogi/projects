@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -55,10 +56,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ChatAppNavigation() {
     val navController = rememberNavController()
+    val viewmodel = hiltViewModel<AppViewModel>()
 
-    NavHost(navController = navController, startDestination = DestinationScreen.Profile.route) {
+    NavHost(navController = navController, startDestination = DestinationScreen.Signup.route) {
         composable(DestinationScreen.Signup.route) {
-            SignupScreen()
+            SignupScreen(navController, viewmodel)
         }
         composable(DestinationScreen.Login.route) {
             LoginScreen()
@@ -70,7 +72,7 @@ fun ChatAppNavigation() {
             StatusListScreen(navController = navController)
         }
         composable(DestinationScreen.Signup.route) {
-            SignupScreen()
+            SignupScreen(navController, viewmodel)
         }
         composable(DestinationScreen.SingleStatus.route) {
             SingleStatusScreen(statusID = "123")
