@@ -16,8 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.whatsappclone.DestinationScreen
-import com.example.whatsappclone.R
 import com.example.whatsappclone.navigateTo
+import com.example.whatsappclone.R
 
 enum class BottomNavigationItem(val icon: Int, val navDestination: DestinationScreen) {
     STATUSLIST(R.drawable.baseline_status, DestinationScreen.StatusList),
@@ -27,22 +27,23 @@ enum class BottomNavigationItem(val icon: Int, val navDestination: DestinationSc
 
 @Composable
 fun BottomNavigationMenu(selectedItem: BottomNavigationItem, navController: NavController) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .wrapContentHeight()
-        .padding(top = 4.dp)
-        .background(Color.White))
-    {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(top = 4.dp)
+            .background(Color.White)
+    ) {
         for (item in BottomNavigationItem.values()) {
             Image(
                 painter = painterResource(id = item.icon),
                 contentDescription = null,
-                modifier = Modifier.
-                    size(40.dp).
-                    padding(4.dp).
-                    weight(1f).
-                    clickable {
-                              navigateTo(navController, item.navDestination.route)
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(4.dp)
+                    .weight(1f)
+                    .clickable {
+                        navigateTo(navController, item.navDestination.route)
                     },
                 colorFilter = if (item == selectedItem) ColorFilter.tint(Color.Black)
                 else ColorFilter.tint(Color.Gray)

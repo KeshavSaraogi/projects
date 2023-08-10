@@ -1,13 +1,10 @@
 package com.example.whatsappclone.ui
 
-import android.graphics.fonts.FontFamily
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -25,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -39,18 +37,19 @@ import com.example.whatsappclone.navigateTo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
-    CheckSignedIn(viewModel = viewModel, navController = navController)
+fun LoginScreen(navController: NavController, vm: AppViewModel) {
+    CheckSignedIn(vm = vm, navController = navController)
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .wrapContentHeight()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(
+                    rememberScrollState()
+                ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             val emailState = remember { mutableStateOf(TextFieldValue()) }
             val passwordState = remember { mutableStateOf(TextFieldValue()) }
 
@@ -89,7 +88,7 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
             Button(
                 onClick = {
                     focus.clearFocus(force = true)
-                    viewModel.onLogin(
+                    vm.onLogin(
                         emailState.value.text,
                         passwordState.value.text
                     )
@@ -103,11 +102,13 @@ fun LoginScreen(navController: NavController, viewModel: AppViewModel) {
                 color = Color.Blue,
                 modifier = Modifier
                     .padding(8.dp)
-                    .clickable { navigateTo(navController, DestinationScreen.Signup.route) }
+                    .clickable {
+                        navigateTo(navController, DestinationScreen.Signup.route)
+                    }
             )
         }
 
-        val isLoading = viewModel.inProgress.value
+        val isLoading = vm.inProgress.value
         if (isLoading)
             CommonProgressSpinner()
     }

@@ -2,7 +2,6 @@ package com.example.whatsappclone.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,44 +19,46 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.whatsappclone.AppViewModel
 import com.example.whatsappclone.CheckSignedIn
 import com.example.whatsappclone.CommonProgressSpinner
 import com.example.whatsappclone.DestinationScreen
+import com.example.whatsappclone.AppViewModel
 import com.example.whatsappclone.R
 import com.example.whatsappclone.navigateTo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignupScreen(navController: NavController, viewModel: AppViewModel) {
-    CheckSignedIn(viewModel = viewModel, navController = NavController())
+fun SignupScreen(navController: NavController, vm: AppViewModel) {
+    CheckSignedIn(vm = vm, navController = navController)
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .wrapContentHeight()
-            .verticalScroll(
-                rememberScrollState()
-            ),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .wrapContentHeight()
+                .verticalScroll(
+                    rememberScrollState()
+                ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val nameState     = remember { mutableStateOf(TextFieldValue()) }
-            val numberState   = remember { mutableStateOf(TextFieldValue()) }
-            val emailState    = remember { mutableStateOf(TextFieldValue()) }
+            val nameState = remember { mutableStateOf(TextFieldValue()) }
+            val numberState = remember { mutableStateOf(TextFieldValue()) }
+            val emailState = remember { mutableStateOf(TextFieldValue()) }
             val passwordState = remember { mutableStateOf(TextFieldValue()) }
 
-            val focus         = LocalFocusManager.current
+            val focus = LocalFocusManager.current
 
-            Image(painter = painterResource(id = R.drawable.chat),
+            Image(
+                painter = painterResource(id = R.drawable.chat),
                 contentDescription = null,
                 modifier = Modifier
                     .width(200.dp)
@@ -68,65 +69,63 @@ fun SignupScreen(navController: NavController, viewModel: AppViewModel) {
             Text(
                 text = "Signup",
                 modifier = Modifier.padding(8.dp),
-                fontSizze = 30.sp,
+                fontSize = 30.sp,
                 fontFamily = FontFamily.SansSerif
             )
 
             OutlinedTextField(
                 value = nameState.value,
-                onValueChange = {nameState.value = it},
+                onValueChange = { nameState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = {Text(text = "Name")}
-            )
+                label = { Text(text = "Name") })
 
             OutlinedTextField(
                 value = numberState.value,
-                onValueChange = {numberState.value = it},
+                onValueChange = { numberState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = {Text(text = "Number")}
-            )
+                label = { Text(text = "Number") })
 
             OutlinedTextField(
                 value = emailState.value,
-                onValueChange = {emailState.value = it},
+                onValueChange = { emailState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = {Text(text = "Email")}
-            )
+                label = { Text(text = "Email") })
 
             OutlinedTextField(
                 value = passwordState.value,
-                onValueChange = {passwordState.value = it},
+                onValueChange = { passwordState.value = it },
                 modifier = Modifier.padding(8.dp),
-                label = {Text(text = "Password")},
+                label = { Text(text = "Password") },
                 visualTransformation = PasswordVisualTransformation()
             )
 
-            Button(onClick = {
-                focus.clearFocus(force = true)
-                viewModel.onSignup(
-                    nameState.value.text,
-                    numberState.value.text,
-                    emailState.value.text,
-                    passwordState.value.text
-                )
-            }, modifier = Modifier.padding(8.dp)
+            Button(
+                onClick = {
+                    focus.clearFocus(force = true)
+                    vm.onSignup(
+                        nameState.value.text,
+                        numberState.value.text,
+                        emailState.value.text,
+                        passwordState.value.text
+                    )
+                },
+                modifier = Modifier.padding(8.dp)
             ) {
                 Text(text = "SIGN UP")
             }
 
-            Text(
-                text = "Already A User? Go to Login -> ",
-                color=Modifier
+            Text(text = "Already a user? Go to login ->",
+                color = Color.Blue,
+                modifier = Modifier
                     .padding(8.dp)
-                    .clickable{
+                    .clickable {
                         navigateTo(navController, DestinationScreen.Login.route)
                     }
             )
-
-            val isLoading = viewModel.inProgress.value
-            if (isLoading) {
-                CommonProgressSpinner()
-            }
         }
+
+        val isLoading = vm.inProgress.value
+        if (isLoading)
+            CommonProgressSpinner()
     }
 }
