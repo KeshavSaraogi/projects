@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react"
-import {
-  TOTAL_SCREENS,
-  GET_SCREENS_INDEX,
-} from "../../../utilities/commonUtils"
+import { TOTAL_SCREENS, GET_SCREEN_INDEX } from "../../../utilities/commonUtils"
 import ScrollService from "../../../utilities/ScrollService"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -15,7 +12,7 @@ export default function Header() {
   const updateCurrentScreen = (currentScreen) => {
     if (!currentScreen || !currentScreen.screenInView) return
 
-    let screenIndex = GET_SCREENS_INDEX(currentScreen.screenInView)
+    let screenIndex = GET_SCREEN_INDEX(currentScreen.screenInView)
     if (screenIndex < 0) return
   }
   let currentScreenSubscription =
